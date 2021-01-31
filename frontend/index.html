@@ -387,11 +387,15 @@
         </script>
         <script>
             var db = firebase.firestore();
-
-            firebase.auth().onAuthStateChanged((user) => {
-                if (!user) {
-                    window.location.href = "login.html";
-                }
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() => {
+                firebase.auth().onAuthStateChanged((user) => {
+                    if (!user) {
+                        window.location.href = "login.html";
+                    }
+                });
+            }).catch((error) => {
+                alert(error);
             });
             document.getElementById("profileName").innerHTML = sessionStorage.getItem("name");
             document.getElementById("profileJob").innerHTML = sessionStorage.getItem("position");
