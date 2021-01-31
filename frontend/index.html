@@ -452,7 +452,7 @@
                             document.getElementById("tickerLabel").innerHTML = body.Item.stock;
                             document.getElementById("resultDescription").innerHTML = "Hobinrood reports with " + 
                                 String(body.Item.confidence)+ "% confidence that Reddit users sentiment favors a " +
-                                String(body.Item.action) + " position on AAPL. Technical indicators suggest: ";
+                                String(body.Item.action) + " position on " + String(body.Item.stock) +". Technical indicators suggest: ";
                             document.getElementById("technicalIndicators").innerHTML = "";
                             var tradingview_widget_container = document.createElement('div');
                             tradingview_widget_container.classList.add("tradingview-widget-container");
