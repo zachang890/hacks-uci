@@ -414,6 +414,8 @@
                 if(doc.exists) {
                     doc = doc.data();
                     var activity = doc.activity;
+                    refreshNotes();
+                    listPortfolio();
                     if(activity.length != 0) {
                         refreshActivity(doc.activity);
                     } else {
@@ -423,8 +425,6 @@
             }).catch(function(error) {
                 alert(error);
             });
-            refreshNotes();
-            listPortfolio();
 
             function portfolioAddition() {
                 clickedButton(3);
