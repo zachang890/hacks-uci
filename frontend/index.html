@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://css.gg/css' rel='stylesheet'>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
+            integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+        <style>
+            .editor
+            {
+                border:solid 1px #ccc;
+                padding: 20px;
+                min-height:100%;
+                max-height:100%;
+                outline: none;
+            }
+            .sample-toolbar
+            {
+                border:solid 1px #ddd;
+                background:#f4f4f4;
+                padding: 5px;
+                border-radius:3px;
+                outline: none;
+            }
+
+            .sample-toolbar > span
+            {
+                cursor:pointer;
+            }
+
+            .sample-toolbar > span:hover
+            {
+                text-decoration:underline;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 
+            This is ugly ass html lmao
+        -->
+        <div id="wrapper" style="margin-left:auto; margin-right:auto;  width:960px;">
+            <div id="menu" style="position:absolute; top:0px; width: 20%; height: 100%; left:0%; background-color: white;">
+                <h1 style="position: absolute; height: 10%; width: 100%; text-align: center; font-family: Helvetica Neue; background: -webkit-linear-gradient(#0BAB64, #00c483); 
+                    -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer;" onclick="window.location.href='index.html'">Hobinrood</h1>
+                <div id="profileButtonCntr" style="position:absolute; top: 12%; left: 0px; width:100%; height: 10%; cursor: pointer;" 
+                    onclick="clickedButton(0);">
+                    <img id="profileImg1" src="https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png" style="position: absolute; top: 5%; left: 5%; width: 20%; height:auto; 
+                        border-radius: 100px;"/>
+                    <div id="profileName" style="position: absolute; top: 10%; height: 40%; left: 30%; width: 60%; white-space:nowrap; text-overflow: ellipsis; 
+                        overflow: hidden; font-family: Helvetica Neue; font-size: 25px; text-align: left; color: #003624;">Name</div>
+                    <div id="profileJob" style="position: absolute; top: 60%; height: 30%; left: 30%; width: 60%; white-space:nowrap; text-overflow: ellipsis; 
+                        overflow: hidden; font-family: Helvetica Neue; font-size: 15px; text-align: left; color: #00c483;">Position</div>
+                </div>
+                <div style="position: absolute; top: 22.5%; height: 2%; left: 0%; width: 100%; text-align: center;">________________________________</div>
+                <div id="overviewButtonCntr"  style="position: absolute; top: 27%; height: 7%; left: 0%; width: 100%; background-color: #ededed; cursor: pointer;"
+                    onclick="clickedButton(1);">
+                    <div id="overviewLbl" style="position: absolute; top: 30%; height: 50%; left: 15%; width: 55%; font-family: Helvetica Neue;
+                        color: #00c483; text-align: left; font-size: 17px;">Overview</div>
+                    <div id="overviewImg" class="gg-home-alt" style="position: absolute; color: #00c483; left: 80%; top: 36%;"></div>
+                </div>
+                <div id="sentimentButtonCntr" style="position: absolute; top: 35%; height: 7%; left: 0%; width: 100%; background-color: white; cursor: pointer;"
+                    onclick="clickedButton(2);">
+                    <div id="sentimentLbl" style="position: absolute; top: 30%; height: 50%; left: 15%; width: 55%; font-family: Helvetica Neue;
+                        color: #00c483; text-align: left; font-size: 17px;">Sentiment</div>
+                    <div id="sentimentImg" class="gg-search" style="position: absolute; color: #00c483; left: 81%; top: 36%;"></div>
+                </div>
+                <div id="portfolioButtonCntr" style="position: absolute; top: 43%; height: 7%; left: 0%; width: 100%; background-color: white; cursor: pointer;"
+                    onclick="clickedButton(3);">
+                    <div id="portfolioLbl" style="position: absolute; top: 30%; height: 50%; left: 15%; width: 55%; font-family: Helvetica Neue;
+                        color: #00c483; text-align: left; font-size: 17px;">Portfolio</div>
+                    <div id="portfolioImg" class="gg-folder" style="position: absolute; color: #00c483; left: 80%; top: 36%;"></div>
+                </div>
+                <div id="notesButtonCntr" style="position: absolute; top: 51%; height: 7%; left: 0%; width: 100%; background-color: white;  cursor: pointer;"
+                    onclick="clickedButton(4);">
+                    <div id="notesLbl" style="position: absolute; top: 30%; height: 50%; left: 15%; width: 55%; font-family: Helvetica Neue;
+                        color: #00c483; text-align: left; font-size: 17px;">Notes</div>
+                    <div id="notesImg" class="gg-notes" style="position: absolute; color: #00c483; left: 80%; top: 28%;"></div>
+                </div>
+                <div id="logoutButtonCntr" style="position: absolute; top: 93%; height: 7%; left: 0%; width: 100%; background-color: #3BB78F; cursor: pointer;"
+                    onclick="logoutClicked();">
+                    <div id="logoutLbl" style="position: absolute; top: 30%; height: 50%; left: 15%; width: 55%; font-family: Helvetica Neue;
+                        color: white; text-align: left; font-size: 17px;">Logout</div>
+                    <div id="logoutImg" class="gg-log-out" style="position: absolute; color: white; left: 85%; top: 32%;"></div>
+                </div>
+            </div>
+
+
+            <div id="navBar" style="position:absolute; top:0px; width: 80%; height: 10%; left: 20%; background-color: white;">
+                <input type="search" style="position: absolute; top: 30%; left: 4%; height: 40%; width: 50%; border: solid 0px; font-size: 17px; outline: none;" 
+                    placeholder="Search Website"/>
+                <div id="searchFieldImg" class="gg-search" style="position: absolute; color: lightgray; left: 2%; top: 45%;"></div>
+                <img id="profileImg2" src="https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png" style="position: absolute; top: 22%; left: 93%; 
+                    width: 3%; height:auto; border-radius: 100px; cursor: pointer;"/>
+                <div id="profileDropDownIcon" class="gg-chevron-down" style="position: absolute; top: 35%; left: 96.3%; color: #00c483; cursor: pointer;"></div>
+            </div>
+
+
+            <div id="main" style="position:absolute; top: 10%; left: 20%; height: 90%; width: 80%; background-color: #3BB78F;"></div>
+
+
+            <!--PROFILE-->
+            <div id="profileCntr" style="position: absolute; top: 12%; left: 22%; height: 86%; width: 76%; background-color: transparent; opacity: 0; z-index: -100;">
+                <div id="profilePictureCntr" style="position: absolute; top: 0%; left: 0%; width: 39%; height: 39%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <img id="profileImg3" src="https://sumaleeboxinggym.com/wp-content/uploads/2018/06/Generic-Profile-1600x1600.png" style="position: absolute; left: 35%; top: 10%; height: auto;
+                        width: 30%; border-radius: 1000px; cursor: pointer;" onclick="profilePicClicked();" />
+                    <div id="profilePicName" style="position: absolute; top: 70%; height: 20%; left: 20%; width: 60%; white-space:nowrap; text-overflow: ellipsis; 
+                        overflow: hidden; font-family: Helvetica Neue; font-size: 25px; text-align: center; color: #003624;">Name</div>
+                    <div id="profilePicJob" style="position: absolute; top: 85%; height: 10%; left: 20%; width: 60%; white-space:nowrap; text-overflow: ellipsis; 
+                        overflow: hidden; font-family: Helvetica Neue; font-size: 15px; text-align: center; color: #00c483;">Position</div>
+                </div>
+                <div id="profileInfoCntr" style="position: absolute; top: 41%; left: 0%; width: 39%; height: 59%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 2%; left: 2%; width: 90%; height: 5%; font-size: 17px; font-family: Helvetica Neue;
+                        color: lightgray;">About</div> 
+                    <div id="summaryLbl" style="position: absolute; top: 10%; left: 5%; width: 90%; height: 20%; font-size: 15px; font-family: Helvetica Neue;
+                        color: black; text-align: center;">
+                        Summary</div>
+                    <div style="position: absolute; top: 30%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Name</div>
+                    <div id="nameLbl" style="position: absolute; top: 30%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Name</div>
+                    <div style="position: absolute; top: 39%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Position</div>
+                    <div id="jobLbl" style="position: absolute; top: 39%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Position</div>
+                    <div style="position: absolute; top: 48%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Joined</div>
+                    <div id="joinedLbl" style="position: absolute; top: 48%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Joined</div>
+                    <div style="position: absolute; top: 57%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Location</div>
+                    <div id="locationLbl" style="position: absolute; top: 57%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Location</div>
+                    <div style="position: absolute; top: 66%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Email</div>
+                    <div id="emailLbl" style="position: absolute; top: 66%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Email</div>
+                    <div style="position: absolute; top: 75%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Work Phone</div>
+                    <div id="phoneLbl" style="position: absolute; top: 75%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Work Phone</div>
+                    <div style="position: absolute; top: 84%; left: 7%; width: 25%; height: 10%; font-size: 15px; font-family: Helvetica Neue; font-weight: bold;">Website</div>
+                    <div id="websiteLbl" style="position: absolute; top: 84%; left: 30%; width: 60%; height: 10%; font-size: 15px; font-family: Helvetica Neue;"
+                        >Website</div>
+                </div>
+                <div id="profileAcitivtyCntr" style="position: absolute; top: 0%; left: 41%; width: 59%; height: 100%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 2%; left: 2%; width: 90%; height: 10%; font-size: 17px; font-family: Helvetica Neue;
+                        color: lightgray;">Recent Activity</div> 
+                    <div id="recentActivityCntr" style="position: absolute; top: 7%; left: 2%; width: 96%; height: 90%; overflow-y: scroll; overflow-x: hidden;"
+                        ></div>
+                </div>
+            </div>
+
+
+
+            <!--OVERVIEW-->
+            <div id="overviewCntr" style="position: absolute; top: 12%; left: 22%; height: 86%; width: 76%; background-color: transparent; opacity: 1; z-index: 100;">
+                <div id="overviewPortfolioCntr" style="position: absolute; top: 0%; left: 0%; height: 49%; width: 100%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; left: 0.5%; top: 2%; width: 99%; height: 96%; overflow: hidden;">
+                        <div class="tradingview-widget-container">
+                            <div id="tradingview_528dd"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                            <script type="text/javascript">
+                            new TradingView.widget({
+                                "width": "100%",
+                                "height": "100%",
+                                "symbol": "SPY",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "en",
+                                "toolbar_bg": "#f1f3f6",
+                                "enable_publishing": false,
+                                "withdateranges": true,
+                                "save_image": false,
+                                "details": true,
+                                "container_id": "tradingview_528dd",
+                                "studies": [
+                                    "BB@tv-basicstudies",
+                                    "MACD@tv-basicstudies",
+                                    "RSI@tv-basicstudies"
+                                ],
+                            });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div id="overviewCalendarCntr" style="position: absolute; top: 51%; left: 0%; height: 49%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; overflow: hidden;">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                                {
+                                    "colorTheme": "light",
+                                    "isTransparent": false,
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "locale": "en",
+                                    "importanceFilter": "-1,0,1"
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div id="overviewNotesCntr" style="position: absolute; top: 51%; left: 51%; height: 49%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div id="overviewNotesList" style="position: absolute; top: 5%; left: 2%; width: 96%; height: 90%;
+                        overflow-y: scroll; overflow-x: hidden;"></div>    
+                </div>
+            </div>
+
+
+
+            <!--SENTIMENT-->
+            <div id="sentimentCntr" style="position: absolute; top: 12%; left: 22%; height: 86%; width: 76%; background-color: transparent; opacity: 0; z-index: -100;">
+                <div id="sentimentSearch" style="position: absolute; left: 0%; width: 49%; top: 0%; height: 100%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div class="gg-search" style="position: absolute; color: lightgray; left: 4%; top: 5%;"></div>
+                    <input id="sentimentSearchField" type="search" style="position: absolute; top: 0.5%; left: 7%; height: 10%; width: 80%; border: solid 0px; font-size: 15px; outline: none;" 
+                        placeholder="Search Using Ticker Symbol"/>
+                    <div id="sentimentSearchResults" style="position: absolute; top: 9%; left: 2%; width: 96%; height: 90%;">
+                        <div id="tickerLabel" style="position: absolute; top: 0%; left: 0%; width: 100%; height: 20%; font-size: 30px; font-family: Helvetica Neue;
+                            text-align: center; color:#3BB78F;"></div>
+                        <div id="resultDescription" style="position: absolute; top: 10%; left: 0%; width: 100%; height: 20%; font-size: 17px; font-family: Helvetica Neue;
+                            text-align: center; color:black;"></div>
+                        <div id="technicalIndicators" style="position: absolute; top: 25%; left: 0%; width: 100%; height: 75%; visibility: hidden;">
+                            <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                                {
+                                    "interval": "1M",
+                                    "width": "100%",
+                                    "isTransparent": false,
+                                    "height": "100%",
+                                    "symbol": "SPY",
+                                    "showIntervalTabs": true,
+                                    "locale": "en",
+                                    "colorTheme": "light"
+                                }
+                                </script>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div id="sentimentCurrentPortfolio" style="position:absolute; top: 0%; height: 100%; left: 51%; width: 49%; background-color: white; 
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 2%; left: 2%; width: 90%; height: 10%; font-size: 17px; font-family: Helvetica Neue;
+                        color: lightgray;">Portfolio Sentiment</div>
+                    <div class="gg-add" style="position: absolute; top: 2%; left: 94%; color: #00c483; cursor: pointer;"
+                        onclick="portfolioAddition();"></div>
+                    <div id="sentimentCurrentPortfolioList" style="position: absolute; top: 8%; left: 2%; width: 96%; height: 90%; overflow-y: scroll; overflow-x: hidden;"></div>
+                </div>
+            </div>
+
+
+
+            <!--PORTFOLIO-->
+            <div id="portfolioCntr" style="position: absolute; top: 12%; left: 22%; height: 86%; width: 76%; background-color: transparent; opacity: 0; z-index: -100;">
+                <div id="portfolioGraphCntr" style="position: absolute; top: 0%; height: 49%; left: 0%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div class="tradingview-widget-container">
+                        <div id="tradingview_528dd2"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                        <script type="text/javascript">
+                        new TradingView.widget({
+                            "width": "100%",
+                            "height": "100%",
+                            "symbol": "SPY",
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "withdateranges": true,
+                            "save_image": false,
+                            "details": true,
+                            "container_id": "tradingview_528dd2",
+                        });
+                        </script>
+                    </div>
+                </div>
+                <div id="potfolioCalendarCntr" style="position: absolute; top: 51%; height: 49%; left: 0%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; overflow: hidden;">
+                        <div class="tradingview-widget-container">
+                            <div class="tradingview-widget-container__widget"></div>
+                            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                                {
+                                    "colorTheme": "light",
+                                    "isTransparent": false,
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "locale": "en",
+                                    "importanceFilter": "-1,0,1"
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div id="portfolioListCntr" style="position: absolute; top: 0%; height: 100%; left: 51%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); z-index: 100;">
+                    <div class="gg-add" style="position: absolute; top: 2%; left: 94%; color: #00c483; cursor: pointer;"
+                        onclick="portfolioAddition();"></div>
+                    <div style="position: absolute; top: 2%; left: 2%; width: 90%; height: 10%; font-size: 17px; font-family: Helvetica Neue;
+                        color: lightgray;">Portfolio Sentiment</div>
+                    <div id="portfolioList" style="position: absolute; top: 8%; left: 2%; width: 96%; height: 90%; overflow-y: scroll; overflow-x: hidden;"></div>
+                </div>
+                <div id="portfolioAddCntr" style="position: absolute; top: 0%; height: 100%; left: 51%; width: 49%; background-color: white;
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); display:none; z-index: -100;">
+                    <div class="gg-close-o" style="position: absolute; top: 2%; left: 94%; color: #00c483; cursor: pointer;"
+                        onclick="returnToPortfolioList();"></div>
+                    <div class="gg-search" style="position: absolute; color: lightgray; left: 4%; top: 5%;"></div>
+                    <input id="portfolioSearch" type="search" style="position: absolute; top: 0.5%; left: 7%; height: 10%; width: 80%; border: solid 0px; font-size: 15px; outline: none;" 
+                        placeholder="Search Using Ticker Symbol"/>
+                </div>
+            </div>
+
+
+            
+            <!--NOTES-->
+            <div id="notesCntr" style="position: absolute; top: 12%; left: 22%; height: 86%; width: 76%; background-color: white; 
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); opacity: 0; z-index: -100; overflow-y: scroll;">
+                <div id="notesList" style="position: absolute; top: 10%; height: 85%; left: 2%; width: 96%; overflow-y: scroll; overflow-x: hidden;
+                    z-index: 100;"></div>
+                <div id="newNote" class="gg-add" style="position: absolute; top: 2%; left: 96%; color: #00c483; cursor: pointer; z-index: 110;"
+                    onclick="newNoteClicked();"></div>
+                <div id="noteEditor" style="position: absolute; top: 0%; left: 0%; height: 100%; width: 100%; background-color: transparent; z-index: -100;
+                    visibility: hidden;">
+                    <div id="noteTitle" style="position: absolute; top: 3%; left: 5%; height: 8%; width: 90%; font-size: 25px; 
+                        font-family: Helvetica Neue; outline: none; z-index: 100; visibility: visible; white-space:nowrap; overflow:hidden;
+                        overflow-x: scroll; " contenteditable="false">Notes</div>
+                    <div style="position: absolute; top: 10%; left: 5%; width: 90%; height: 65%;">
+                        <div class="sample-toolbar">
+                            <a href="javascript:void(0)" onclick="format('bold')"><span class="fa fa-bold fa-fw" style="color:#00c483"></span></a>
+                            <a href="javascript:void(0)" onclick="format('italic')"><span class="fa fa-italic fa-fw" style="color:#00c483"></span></a>
+                            <a href="javascript:void(0)" onclick="format('insertunorderedlist')"><span class="fa fa-list fa-fw" style="color:#00c483"></span></a>
+                            <a href="javascript:void(0)" onclick="setUrl()"><span class="fa fa-link fa-fw" style="color:#00c483"></span></a>
+                            <span><input id="txtFormatUrl" placeholder="url" class="form-control" style="outline: none;"></span>
+                        </div>
+                        <div class="editor" id="sampleeditor" style="overflow-y: scroll;"></div>
+                    </div>
+                    <div id="saveButton" style="position: absolute; top: 90%; left: 75%; width: 20%; height: 5%; font-size: 23px; font-family: Helvetica Neue; text-align: center;
+                        background-color: #00c483; color: white; border-radius: 3px; cursor: pointer;" onclick="saveClicked();">Save</div>
+                </div>
+            </div>
+
+
+            <!--DROP DOWN-->
+            <div id="profileDropDown" style="position: absolute; top: 7%; left: 90.5%; height: 15%; width: 8%; background-color: white; 
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); opacity: 0; display: none;">
+                <div id="dropDownProfile" style="position: absolute; top: 10%; height: 20%; left: 10%; width: 60%; text-align: left; font-family: Helvetica Neue;
+                    font-size: 15px; color: #00c483; cursor: pointer;" onclick="clickedButton(0);">Profile</div>
+                <div id="profileDropDownProfileIcon" class="gg-profile" style="position: absolute; top: 7%; left: 72%; color: #00c483; cursor: pointer;"
+                    onclick="clickedButton(0);"></div>
+                <div id="dropDownNotes" style="position: absolute; top: 40%; height: 20%; left: 10%; width: 60%; text-align: left; font-family: Helvetica Neue;
+                    font-size: 15px; color: #00c483; cursor: pointer;" onclick="clickedButton(4);">Notes</div>
+                <div id="profileDropDownNotesIcon" class="gg-notes" style="position: absolute; top: 37%; left: 72%; color: #00c483; cursor: pointer;"
+                    onclick="clickedButton(4);"></div>
+                <div id="dropDownSignOut" style="position: absolute; top: 70%; height: 20%; left: 10%; width: 60%; text-align: left; font-family: Helvetica Neue;
+                    font-size: 15px; color: #00c483; cursor: pointer;" onclick="logoutClicked();">Logout</div>
+                <div id="profileDropDownLogoutIcon" class="gg-log-out" style="position: absolute; top: 70%; left: 83%; color: #00c483; cursor: pointer;"
+                    onclick="logoutClicked();"></div>
+            </div>
+        </div>
+        <input id="fileInput" type="file" accept='image/*' onchange='openFile(event)'/>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+        
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyD0ATCsI4RFlciDMA62liZbOVkzygq6OzY",
+                authDomain: "hobinrood-d5692.firebaseapp.com",
+                projectId: "hobinrood-d5692",
+                storageBucket: "hobinrood-d5692.appspot.com",
+                messagingSenderId: "327067621669",
+                appId: "1:327067621669:web:55ec862bbe384d7d5262cc",
+                measurementId: "G-0VZDE15WNY"
+            };
+    
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
+        <script>
+            var db = firebase.firestore();
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if (!user) {
+                    window.location.href = "login.html";
+                }
+            });
+            document.getElementById("profileName").innerHTML = sessionStorage.getItem("name");
+            document.getElementById("profileJob").innerHTML = sessionStorage.getItem("position");
+            document.getElementById("nameLbl").innerHTML = sessionStorage.getItem("name");
+            document.getElementById("jobLbl").innerHTML = sessionStorage.getItem("position");
+            document.getElementById("joinedLbl").innerHTML = sessionStorage.getItem("joined");
+            document.getElementById("locationLbl").innerHTML = sessionStorage.getItem("location");
+            document.getElementById("emailLbl").innerHTML = sessionStorage.getItem("email");
+            document.getElementById("phoneLbl").innerHTML = sessionStorage.getItem("phone");
+            document.getElementById("websiteLbl").innerHTML = sessionStorage.getItem("website");
+            document.getElementById("profilePicName").innerHTML = sessionStorage.getItem("name");
+            document.getElementById("profilePicJob").innerHTML = sessionStorage.getItem("position");
+            document.getElementById("summaryLbl").innerHTML = sessionStorage.getItem("summary");
+            
+            db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                if(doc.exists) {
+                    doc = doc.data();
+                    var activity = doc.activity;
+                    if(activity.length != 0) {
+                        refreshActivity(doc.activity);
+                    } else {
+                        noNotes(recentActivityCntr, "No Recent Activity");
+                    }
+                }
+            }).catch(function(error) {
+                alert(error);
+            });
+            refreshNotes();
+            listPortfolio();
+
+            function portfolioAddition() {
+                clickedButton(3);
+                document.getElementById("portfolioListCntr").style.zIndex = -100;
+                document.getElementById("portfolioListCntr").style.display = "none";
+                document.getElementById("portfolioAddCntr").style.display = "block";
+                document.getElementById("portfolioAddCntr").style.zIndex = 100;
+            }
+            function returnToPortfolioList() {
+                document.getElementById("portfolioAddCntr").style.zIndex = -100;
+                document.getElementById("portfolioAddCntr").style.display = "none";
+                document.getElementById("portfolioListCntr").style.display = "block";
+                document.getElementById("portfolioListCntr").style.zIndex = 100;
+            }
+            $("#sentimentSearchField").on('keyup', function (e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    var searchStr = String(document.getElementById("sentimentSearchField").value);
+                    searchStrr(searchStr);
+                }
+            });
+            function searchStrr(searchStr) {
+                fetch("https://qm1bckb5xg.execute-api.us-west-2.amazonaws.com/alpha-2/?fbclid=IwAR2mwCN72P64ROrUtig2rAH3NiljRuoE0kioceaq4WrIi-21DFEdR2w0FCE&stock="
+                     + searchStr)
+                    .then(function(response) {
+                        return response.json();
+                    }).then(function(data) {
+                        var body = data.body;
+                        if(body.Item) {
+                            document.getElementById("tickerLabel").innerHTML = body.Item.stock;
+                            document.getElementById("resultDescription").innerHTML = "Hobinrood reports with " + 
+                                String(body.Item.confidence)+ "% confidence that Reddit users sentiment favors a " +
+                                String(body.Item.action) + " position on AAPL. Technical indicators suggest: ";
+                            document.getElementById("technicalIndicators").innerHTML = "";
+                            var tradingview_widget_container = document.createElement('div');
+                            tradingview_widget_container.classList.add("tradingview-widget-container");
+                            var tradingview_widget_container__widget = document.createElement('div');
+                            tradingview_widget_container__widget.classList.add("tradingview-widget-container__widget");
+                            var scr = document.createElement("script");
+                            scr.type = "text/javascript";
+                            scr.src = "https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
+                            scr.defer = true;
+                            scr.text = '{"interval": "1m","width": "100%","isTransparent": false,"height": "100%","symbol": "' + String(body.Item.stock) + '","showIntervalTabs": true, "locale": "en","colorTheme": "light"}';
+                            tradingview_widget_container.appendChild(tradingview_widget_container__widget);
+                            document.getElementById("technicalIndicators").appendChild(tradingview_widget_container);
+                            tradingview_widget_container__widget.parentNode.insertBefore(scr, tradingview_widget_container__widget);
+                            document.getElementById("technicalIndicators").style.visibility = "visible";
+                            updateActivity(searchStr + " sentiment analyzed.");
+                        } else {
+                            updateActivity(searchStr + " not recognized.");
+                            alert("Ticker symbol not recognized.");
+                        }
+                    }).catch(function(error) {
+                        alert(error);
+                    });
+            }
+            $("#portfolioSearch").on('keyup', function (e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    var searchStr = String(document.getElementById("portfolioSearch").value);
+                    fetch("https://qm1bckb5xg.execute-api.us-west-2.amazonaws.com/alpha-2/?fbclid=IwAR2mwCN72P64ROrUtig2rAH3NiljRuoE0kioceaq4WrIi-21DFEdR2w0FCE&stock="
+                     + searchStr)
+                    .then(function(response) {
+                        return response.json();
+                    }).then(function(data) {
+                        var body = data.body;
+                        if(body.Item) {
+                            var alreadyExists = false;
+                            db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                                if(doc.exists){
+                                    doc = doc.data();
+                                    var portfolio = doc.portfolio;
+                                    if(portfolio.length != 0) {
+                                        for(const elem in portfolio) {
+                                            if(portfolio[elem] == searchStr) {
+                                                alreadyExists = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                if(!alreadyExists) {
+                                    db.collection("users").doc(sessionStorage.getItem("uid")).update({
+                                        portfolio: firebase.firestore.FieldValue.arrayUnion(searchStr)
+                                    });
+                                    listPortfolio();
+                                    alert(searchStr + " added to portfolio");
+                                    updateActivity(searchStr + " added to portfolio");
+                                    new TradingView.widget({
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "symbol": searchStr,
+                                        "interval": "D",
+                                        "timezone": "Etc/UTC",
+                                        "theme": "light",
+                                        "style": "1",
+                                        "locale": "en",
+                                        "toolbar_bg": "#f1f3f6",
+                                        "enable_publishing": false,
+                                        "withdateranges": true,
+                                        "save_image": false,
+                                        "details": true,
+                                        "container_id": "tradingview_528dd2",
+                                    });
+                                    new TradingView.widget({
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "symbol": searchStr,
+                                        "interval": "D",
+                                        "timezone": "Etc/UTC",
+                                        "theme": "light",
+                                        "style": "1",
+                                        "locale": "en",
+                                        "toolbar_bg": "#f1f3f6",
+                                        "enable_publishing": false,
+                                        "withdateranges": true,
+                                        "save_image": false,
+                                        "details": true,
+                                        "container_id": "tradingview_528dd",
+                                        "studies": [
+                                            "BB@tv-basicstudies",
+                                            "MACD@tv-basicstudies",
+                                            "RSI@tv-basicstudies"
+                                        ],
+                                    });
+                                    returnToPortfolioList();
+                                } else {
+                                    alert(searchStr + " is already part of your portfolio.");
+                                }
+                            }).catch(function(error) {
+                                alert(error);
+                            });
+
+                        } else {
+                            updateActivity(searchStr + " not recognized.");
+                            alert("Ticker symbol not recognized.");
+                        }
+                    }).catch(function(error) {
+                        alert(error);
+                    });
+                }
+            });
+            if(sessionStorage.getItem("picture") != "") {
+                var storageRef = firebase.storage().ref().child(String(sessionStorage.getItem("picture")));
+                storageRef.getDownloadURL().then((url) => {
+                    document.getElementById("profileImg1").setAttribute('src', url);
+                    document.getElementById("profileImg2").setAttribute('src', url);
+                    document.getElementById("profileImg3").setAttribute('src', url);
+                }).catch((error) => {
+                    alert(error);
+                });
+            }
+
+            window.addEventListener('load', function(){
+                document.getElementById('sampleeditor').setAttribute('contenteditable', 'true');
+            });
+            function listPortfolio() {
+                var portfolioList = document.getElementById("portfolioList");
+                var sentimentCurrentPortfolioList = document.getElementById("sentimentCurrentPortfolioList");
+                if(portfolioList.hasChildNodes()) {
+                    while(portfolioList.hasChildNodes()) {
+                        portfolioList.removeChild(portfolioList.lastChild);
+                    }
+                    portfolioList.scrollHeight = "50px";
+                }
+                if(sentimentCurrentPortfolioList.hasChildNodes()) {
+                    while(sentimentCurrentPortfolioList.hasChildNodes()) {
+                        sentimentCurrentPortfolioList.removeChild(sentimentCurrentPortfolioList.lastChild);
+                    }
+                    sentimentCurrentPortfolioList.scrollHeight = "50px";
+                }
+                db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                    if(doc.exists){
+                        doc = doc.data();
+                        var portfolioValues = doc.portfolio;
+                        if(portfolioValues.length != 0) {
+                            var counter = 0;
+                            for(const elem in portfolioValues) {
+                                fetch("https://qm1bckb5xg.execute-api.us-west-2.amazonaws.com/alpha-2/?fbclid=IwAR2mwCN72P64ROrUtig2rAH3NiljRuoE0kioceaq4WrIi-21DFEdR2w0FCE&stock="
+                                + portfolioValues[elem])
+                                .then(function(response) {
+                                    return response.json();
+                                }).then(function(data) {
+                                    var item = data.body.Item;
+                                    var cntrDiv = document.createElement("div");
+                                    cntrDiv.style.position = "absolute";
+                                    cntrDiv.style.top = String(((counter * 13) / 100.0) * portfolioList.getBoundingClientRect().height) + "px";
+                                    cntrDiv.style.height = String(0.1 * portfolioList.getBoundingClientRect().height) + "px";
+                                    cntrDiv.style.left = "0px";
+                                    cntrDiv.style.width = String(0.99* portfolioList.getBoundingClientRect().width) + "px";
+                                    cntrDiv.style.border = "solid 1px #f5f5f5";
+                                    cntrDiv.style.borderRadius = "10px";
+                                    cntrDiv.style.cursor = "pointer";
+                                    cntrDiv.onclick = function() {
+                                        clickedButton(3);
+                                        new TradingView.widget({
+                                            "width": "100%",
+                                            "height": "100%",
+                                            "symbol": String(this.childNodes[0].innerHTML),
+                                            "interval": "D",
+                                            "timezone": "Etc/UTC",
+                                            "theme": "light",
+                                            "style": "1",
+                                            "locale": "en",
+                                            "toolbar_bg": "#f1f3f6",
+                                            "enable_publishing": false,
+                                            "withdateranges": true,
+                                            "save_image": false,
+                                            "details": true,
+                                            "container_id": "tradingview_528dd2",
+                                        });
+                                        new TradingView.widget({
+                                            "width": "100%",
+                                            "height": "100%",
+                                            "symbol": String(this.childNodes[0].innerHTML),
+                                            "interval": "D",
+                                            "timezone": "Etc/UTC",
+                                            "theme": "light",
+                                            "style": "1",
+                                            "locale": "en",
+                                            "toolbar_bg": "#f1f3f6",
+                                            "enable_publishing": false,
+                                            "withdateranges": true,
+                                            "save_image": false,
+                                            "details": true,
+                                            "container_id": "tradingview_528dd",
+                                            "studies": [
+                                                "BB@tv-basicstudies",
+                                                "MACD@tv-basicstudies",
+                                                "RSI@tv-basicstudies"
+                                            ],
+                                        });
+                                    }
+
+                                    var titleDiv = document.createElement("div");
+                                    titleDiv.style.position = "absolute";
+                                    titleDiv.style.top = "0%";
+                                    titleDiv.style.height = "100%";
+                                    titleDiv.style.left = "2%";
+                                    titleDiv.style.width = "20%";
+                                    titleDiv.style.lineHeight = String(0.1 * portfolioList.getBoundingClientRect().height) + "px";
+                                    if(item.action == "Buy") {
+                                        titleDiv.style.backgroundColor = "#00c483";
+                                    } else if(item.action == "Sell") {
+                                        titleDiv.style.backgroundColor = "#9e0000";
+                                    } else{
+                                        titleDiv.style.backgroundColor = "#a39e00";
+                                    }
+                                    titleDiv.style.textAlign = "center";
+                                    titleDiv.style.color = "white";
+                                    titleDiv.style.fontFamily = "Helvetica Neue";
+                                    titleDiv.style.fontSize = "13px";
+                                    titleDiv.style.whiteSpace = "nowrap";
+                                    titleDiv.style.overflow = "hidden";
+                                    titleDiv.style.textOverflow = "ellipsis";
+                                    titleDiv.innerHTML = item.stock;
+                                    cntrDiv.appendChild(titleDiv);
+
+                                    var actionDiv = document.createElement("div");
+                                    actionDiv.style.position = "absolute";
+                                    actionDiv.style.top = "0%";
+                                    actionDiv.style.height = "100%";
+                                    actionDiv.style.left = "30%";
+                                    actionDiv.style.width = "20%";
+                                    actionDiv.style.lineHeight = String(0.1 * portfolioList.getBoundingClientRect().height) + "px";
+                                    actionDiv.style.color = "black";
+                                    actionDiv.style.fontFamily = "Helvetica Neue";
+                                    actionDiv.style.fontSize = "13px";
+                                    actionDiv.style.whiteSpace = "nowrap";
+                                    actionDiv.style.overflow = "hidden";
+                                    actionDiv.style.textOverflow = "ellipsis";
+                                    actionDiv.innerHTML = item.action;
+                                    cntrDiv.appendChild(actionDiv);
+
+                                    var confDiv = document.createElement("div");
+                                    confDiv.style.position = "absolute";
+                                    confDiv.style.top = "0%";
+                                    confDiv.style.height = "100%";
+                                    confDiv.style.left = "50%";
+                                    confDiv.style.width = "40%";
+                                    confDiv.style.lineHeight = String(0.1 * portfolioList.getBoundingClientRect().height) + "px";
+                                    confDiv.style.color = "black";
+                                    confDiv.style.fontFamily = "Helvetica Neue";
+                                    confDiv.style.fontSize = "13px";
+                                    confDiv.style.whiteSpace = "nowrap";
+                                    confDiv.style.overflow = "hidden";
+                                    confDiv.style.textOverflow = "ellipsis";
+                                    confDiv.innerHTML = "Confidence: " + String(parseFloat(item.confidence).toFixed(4)) + "%";
+                                    cntrDiv.appendChild(confDiv);
+                                    
+                                    portfolioList.appendChild(cntrDiv);
+                                    
+                                    var cntrDiv2 = cntrDiv.cloneNode(true);
+                                    cntrDiv2.onclick = function() {
+                                        clickedButton(2);
+                                        document.getElementById("sentimentSearchField").value = String(this.childNodes[0].innerHTML);
+                                        searchStrr(String(this.childNodes[0].innerHTML));
+                                    }
+                                    
+                                    sentimentCurrentPortfolioList.appendChild(cntrDiv2);
+
+                                    counter++;
+                                }).catch(function(error) {
+                                    alert(error);
+                                });
+                            }
+                        } else {
+                            noNotes(portfolioList, "No Items in portfolio");
+                        }
+                    }
+                }).catch(function(error) {
+                    alert(error);
+                })
+            }
+            function format(command, value) {
+                document.execCommand(command, false, value);
+            }
+            function refreshNotes() {
+                db.collection("users").doc(String(sessionStorage.getItem("uid"))).get().then(function(doc) {
+                    if(doc.exists) {
+                        doc = doc.data();
+                        var notes = doc.notes;
+                        var notesList = document.getElementById("notesList");
+                        var notesList2 = document.getElementById("overviewNotesList");
+                        if(notesList.hasChildNodes()) {
+                            while (notesList.hasChildNodes()) {
+                                notesList.removeChild(notesList.lastChild);
+                            }
+                        }
+                        if(notesList2.hasChildNodes()) {
+                            while (notesList2.hasChildNodes()) {
+                                notesList2.removeChild(notesList2.lastChild);
+                            }
+                        }
+                        
+                        if(notes.length != 0) {
+                            notesHelper("notesList", notes, true);
+                            notesHelper("overviewNotesList", notes, false);
+                        } else {
+                            noNotes(notesList, "No Saved Notes");
+                            noNotes(notesList2, "No Saved Notes");
+                        }
+                    }
+                }).catch(function(error) {
+                    alert(error);
+                }); 
+            }
+            function noNotes(elem, text) {
+                elem.scrollHeight = "50px";
+                var cntrDiv = document.createElement("div");
+                cntrDiv.style.position = "absolute";
+                cntrDiv.style.top = String(0.05 * elem.getBoundingClientRect().height) + "px";
+                cntrDiv.style.height = String(0.07 * elem.getBoundingClientRect().height) + "px";
+                cntrDiv.style.left = String(0.1 * elem.getBoundingClientRect().width) + "px";
+                cntrDiv.style.width = String(0.8 * elem.getBoundingClientRect().width) + "px";
+                cntrDiv.style.textAlign = "center";
+                cntrDiv.style.color = "#00c483";
+                cntrDiv.style.fontFamily = "Helvetica Neue";
+                cntrDiv.style.fontSize = "25px";
+                cntrDiv.innerHTML = String(text);
+                elem.scrollTop += String(0.1 * elem.getBoundingClientRect().height) + "px";
+                elem.appendChild(cntrDiv);
+            }
+            function notesHelper(notesDest, notes, yes) {
+                var notesList = document.getElementById(String(notesDest));
+                if(yes) {
+                    notes.reverse();
+                }
+                notesList.scrollHeight = "50px";
+                var counter = 0;
+                for(const elem in notes) {
+                    var cntrDiv = document.createElement("div");
+                    cntrDiv.style.position = "absolute";
+
+                    if(notesDest == "overviewNotesList") {
+                        cntrDiv.style.top = String(((counter * 22) / 100.0) * notesList.getBoundingClientRect().height) + "px";
+                        cntrDiv.style.height = String(0.17 * notesList.getBoundingClientRect().height) + "px";
+                    } else {
+                        cntrDiv.style.top = String(((counter * 17) / 100.0) * notesList.getBoundingClientRect().height) + "px";
+                        cntrDiv.style.height = String(0.13 * notesList.getBoundingClientRect().height) + "px";
+                    }   
+                    cntrDiv.style.left = "0px";
+                    cntrDiv.style.width = String(0.99 * notesList.getBoundingClientRect().width) + "px";
+                    cntrDiv.style.borderTop = "solid 1px #f5f5f5";
+                    cntrDiv.style.borderBottom = "solid 1px #f5f5f5";
+                    cntrDiv.style.cursor = "pointer";
+                    cntrDiv.onclick = function() {
+                        clickedButton(4);
+                        setUpNotesEditor(String(this.childNodes[1].innerHTML));
+                    };
+
+                    var titleDiv = document.createElement("div");
+                    titleDiv.style.position = "absolute";
+                    titleDiv.style.top = "0%";
+                    titleDiv.style.height = "100%";
+                    titleDiv.style.left = "2%";
+                    titleDiv.style.width = "20%";
+                    if(notesDest == "overviewNotesList") {
+                        titleDiv.style.lineHeight = String(0.17 * notesList.getBoundingClientRect().height) + "px";
+                    } else {
+                        titleDiv.style.lineHeight = String(0.13 * notesList.getBoundingClientRect().height) + "px";
+                    }   
+                    titleDiv.style.backgroundColor = "#00c483";
+                    titleDiv.style.textAlign = "center";
+                    titleDiv.style.color = "white";
+                    titleDiv.style.fontFamily = "Helvetica Neue";
+                    if(notesDest == "overviewNotesList") {
+                        titleDiv.style.fontSize = "10px";
+                    } else {
+                        titleDiv.style.fontSize = "23px";
+                    }   
+                    titleDiv.style.whiteSpace = "nowrap";
+                    titleDiv.style.overflow = "hidden";
+                    titleDiv.style.textOverflow = "ellipsis";
+                    titleDiv.innerHTML = notes[elem].title;
+                    cntrDiv.appendChild(titleDiv);
+
+                    var idDiv = document.createElement("div");
+                    idDiv.style.position = "absolute";
+                    idDiv.style.top = "0%";
+                    idDiv.style.height = "100%";
+                    idDiv.style.left = "24%";
+                    idDiv.style.width = "35%";
+                    if(notesDest == "overviewNotesList") {
+                        idDiv.style.lineHeight = String(0.17 * notesList.getBoundingClientRect().height) + "px";
+                    } else {
+                        idDiv.style.lineHeight = String(0.13 * notesList.getBoundingClientRect().height) + "px";
+                    }   
+                    
+                    idDiv.style.color = "gray";
+                    idDiv.style.fontFamily = "Helvetica Neue";
+                    if(notesDest == "overviewNotesList") {
+                        idDiv.style.fontSize = "8px";
+                    } else {
+                        idDiv.style.fontSize = "13px";
+                    }       
+                    idDiv.style.whiteSpace = "nowrap";
+                    idDiv.style.overflow = "hidden";
+                    idDiv.style.textOverflow = "ellipsis";
+                    idDiv.innerHTML = "ID: " + String(notes[elem].id);
+                    cntrDiv.appendChild(idDiv);
+
+                    var dateDiv = document.createElement("div");
+                    dateDiv.style.position = "absolute";
+                    dateDiv.style.top = "0%";
+                    dateDiv.style.height = "100%";
+                    dateDiv.style.left = "63%";
+                    dateDiv.style.width = "30%";
+                    if(notesDest == "overviewNotesList") {
+                        dateDiv.style.lineHeight = String(0.17 * notesList.getBoundingClientRect().height) + "px";
+                    } else {
+                        dateDiv.style.lineHeight = String(0.13 * notesList.getBoundingClientRect().height) + "px";
+                    }
+                    dateDiv.style.color = "black";
+                    dateDiv.style.fontFamily = "Helvetica Neue";
+                    if(notesDest == "overviewNotesList") {
+                        dateDiv.style.fontSize = "8px";
+                    } else {
+                        dateDiv.style.fontSize = "13px";
+                    }                   
+                    dateDiv.style.whiteSpace = "nowrap";
+                    dateDiv.style.overflow = "hidden";
+                    dateDiv.style.textOverflow = "ellipsis";
+                    dateDiv.innerHTML = "Last Modified: " + String(notes[elem].time);
+                    cntrDiv.appendChild(dateDiv);
+
+                    var chevronDiv = document.createElement("div");
+                    chevronDiv.style.position = "absolute";
+                    if(notesDest == "overviewNotesList") {
+                        chevronDiv.style.top = "27%";
+                    } else {
+                        chevronDiv.style.top = "33%";
+                    }                   
+                    chevronDiv.style.left = "95%";
+                    chevronDiv.style.color = "#00c483";
+                    chevronDiv.classList.add("gg-chevron-right");
+                    cntrDiv.appendChild(chevronDiv);
+
+                    notesList.appendChild(cntrDiv);
+                    counter++;
+                }
+            }
+            function setUrl() {
+                var url = document.getElementById('txtFormatUrl').value;
+                var sText = document.getSelection();
+                document.execCommand('insertHTML', false, '<a href="' + url + '" target="_blank">' + sText + '</a>');
+                document.getElementById('txtFormatUrl').value = '';
+            }
+            function setUpNotesEditor(idOfNote) {
+                sessionStorage.setItem("currentNoteEdit", String(idOfNote).substring(4));
+                db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                    if(doc.exists) {
+                        doc = doc.data();
+                        var notes = doc.notes;
+                        for(const elem in notes) {
+                            if(String(notes[elem].id) == idOfNote.substring(4)) {
+                                newNoteClicked();
+                                document.getElementById("sampleeditor").innerHTML = atob(notes[elem].data);
+                                document.getElementById("noteTitle").innerHTML = String(notes[elem].title);
+                                document.getElementById("noteTitle").contentEditable = "true";
+                            }
+                        }
+                    }
+                }).catch(function(error) {
+                    alert(error);
+                });
+            }
+            $(window).click(function() {
+                $("#profileDropDown").animate({
+                    opacity: 0,
+                    zIndex: -100,
+                    top:"7%"
+                }, {
+                    duration: 250,
+                    complete: function() {
+                        document.getElementById("profileDropDown").style.display = "none";
+                    }
+                });
+            });
+            $('#profileImg2').click(function(event){
+                event.stopPropagation();
+                openCloseDropDown();
+            });
+            $('#profileDropDownIcon').click(function(event){
+                event.stopPropagation();
+                openCloseDropDown();
+            });
+            $('#profileDropDown').click(function(event) {
+                event.stopPropagation();
+            });
+            function openCloseDropDown() {
+                if(document.getElementById("profileDropDown").style.opacity == 0) {
+                    document.getElementById("profileDropDown").style.display = "block";
+                    document.getElementById("profileDropDown").style.zIndex = 100;
+                    $("#profileDropDown").animate({
+                        opacity: 1,
+                        top:"9%"
+                    }, 250);
+                } else {
+                    $("#profileDropDown").animate({
+                        opacity: 0,
+                        zIndex: -100,
+                        top:"7%"
+                    }, {
+                        duration: 250,
+                        complete: function() {
+                            document.getElementById("profileDropDown").style.display = "none";
+                        }
+                    });   
+                }
+            }
+            function clickedButton(buttonIndex) {
+                document.getElementById("tickerLabel").innerHTML = "";
+                document.getElementById("resultDescription").innerHTML = "";
+                document.getElementById("technicalIndicators").style.visibility = "hidden";
+                document.getElementById("sentimentSearchField").value = "";
+                if(document.getElementById("profileDropDown").style.opacity == 1) {
+                    openCloseDropDown();
+                }
+                ids = ["profileCntr","overviewCntr","sentimentCntr","portfolioCntr","notesCntr"];
+                ids2 = ["profileButtonCntr","overviewButtonCntr","sentimentButtonCntr","portfolioButtonCntr","notesButtonCntr"];
+                for(const cntr in ids) {
+                    document.getElementById(ids[cntr]).style.opacity = 0;
+                    document.getElementById(ids[cntr]).style.zIndex = -100;
+                    document.getElementById(ids2[cntr]).style.backgroundColor = "white";
+                }
+                document.getElementById(ids[buttonIndex]).style.opacity = 1;
+                document.getElementById(ids[buttonIndex]).style.zIndex = 100;
+                document.getElementById(ids2[buttonIndex]).style.backgroundColor = "#ededed";
+            }
+            function newNoteClicked() {
+                if(document.getElementById("newNote").classList.contains("gg-add")) {
+                    document.getElementById("newNote").classList.remove("gg-add");
+                    document.getElementById("newNote").classList.add("gg-close-o");
+                    document.getElementById("notesList").style.zIndex = -100;
+                    document.getElementById("notesList").style.visibility = "hidden";
+                    document.getElementById("noteEditor").style.visibility = "visible";
+                    document.getElementById("noteEditor").style.zIndex = 100;
+                    document.getElementById("noteTitle").contentEditable = "true";
+                    document.getElementById("noteTitle").innerHTML = "New Note";
+                    document.getElementById("sampleeditor").innerHTML = "";
+                } else {
+                    sessionStorage.setItem("currentNoteEdit", "");
+                    refreshNotes();
+                    document.getElementById("newNote").classList.remove("gg-close-o");
+                    document.getElementById("newNote").classList.add("gg-add");
+                    document.getElementById("noteEditor").style.zIndex = -100;
+                    document.getElementById("notesList").style.visibility = "visible";
+                    document.getElementById("noteEditor").style.visibility = "hidden";
+                    document.getElementById("notesList").style.zIndex = 100;
+                    document.getElementById("noteTitle").innerHTML = "Notes";
+                    document.getElementById("noteTitle").contentEditable = "false";
+                    document.getElementById("noteTitle").style.visibility = "visible";
+                    document.getElementById("noteTitle").style.zIndex = 100;
+                }
+            }
+            function saveClicked() {
+                if(document.getElementById("sampleeditor").innerHTML != null &&
+                document.getElementById("sampleeditor").innerHTML != "" &&
+                document.getElementById("noteTitle").innerHTML != null &&
+                document.getElementById("noteTitle").innerHTML != "") {
+                    var currText = document.getElementById("sampleeditor").innerHTML;
+                    var encoded = String(btoa(currText));
+                    var alreadySaved = false;
+                    db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                        if(doc.exists) {
+                            doc = doc.data();
+                            var notes = doc.notes;
+                            for(const elem in notes) {
+                                if(notes[elem].id == sessionStorage.getItem("currentNoteEdit")) {
+                                    var curId = notes[elem].id;
+                                    db.collection("users").doc(sessionStorage.getItem("uid")).update({
+                                        notes: firebase.firestore.FieldValue.arrayRemove(notes[elem])
+                                    });
+                                    db.collection("users").doc(sessionStorage.getItem("uid")).update({
+                                        notes: firebase.firestore.FieldValue.arrayUnion({
+                                            id: String(curId),
+                                            title: String(document.getElementById("noteTitle").innerHTML),
+                                            data: String(encoded),
+                                            time: String(new Date().toLocaleString())
+                                        }),
+                                    });
+                                    refreshNotes();
+                                    updateActivity("Note " + String(curId) + " saved.");
+                                    alert("Your note has been saved");
+                                    alreadySaved = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }).then(function() {
+                        if(!alreadySaved) {
+                            var uniqueId = guidGenerator();
+                            sessionStorage.setItem("currentNoteEdit", String(uniqueId));
+                            db.collection("users").doc(sessionStorage.getItem("uid")).update({
+                                notes: firebase.firestore.FieldValue.arrayUnion({
+                                    id: String(uniqueId),
+                                    title: String(document.getElementById("noteTitle").innerHTML),
+                                    data: encoded,
+                                    time: String(new Date().toLocaleString())
+                                })
+                            });
+                            refreshNotes();
+                            updateActivity("Note " + String(uniqueId) + " saved.");
+                            alert("Your note has been saved");
+                        }
+                    }).catch(function(error) {
+                        alert(error);
+                    });
+                } else {
+                    alert("Please ensure your title and notes are valid.");
+                }
+            }
+            function guidGenerator() {
+                var S4 = function() {
+                    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+                };
+                return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+            }
+            function logoutClicked() {
+                firebase.auth().signOut().then(() => {
+                    sessionStorage.setItem("uid", "");
+                    sessionStorage.setItem("email", "");
+                    sessionStorage.setItem("name", "");
+                    sessionStorage.setItem("position", "");
+                    sessionStorage.setItem("location", "");
+                    sessionStorage.setItem("phone", "");
+                    sessionStorage.setItem("website", "");
+                    sessionStorage.setItem("summary", "");
+                    sessionStorage.setItem("joined", "");
+                    sessionStorage.setItem("picture", "");
+                    window.location.href = "login.html";
+                }).catch((error) => {
+                    alert(error);
+                });
+            }
+            function profilePicClicked() {
+                document.getElementById("fileInput").click();
+            }
+            var openFile = function(file) {
+                var storageRef = firebase.storage().ref().child(String(sessionStorage.getItem("uid") + ".jpg"));
+                var fileUpload = file.target.files[0];
+                storageRef.put(fileUpload).then((snapshot) => {
+                    document.getElementById("profileImg1").setAttribute('src', window.URL.createObjectURL(fileUpload));
+                    document.getElementById("profileImg2").setAttribute('src', window.URL.createObjectURL(fileUpload));
+                    document.getElementById("profileImg3").setAttribute('src', window.URL.createObjectURL(fileUpload));
+                    db.collection("users").doc(String(sessionStorage.getItem("uid"))).update({
+                        "picture": String(sessionStorage.getItem("uid")) + ".jpg"
+                    });
+                    sessionStorage.setItem("picture", String(sessionStorage.getItem("uid")) + ".jpg");
+                    storageRef.getDownloadURL().then((url) => {
+                        document.getElementById("profileImg1").setAttribute('src', url);
+                        document.getElementById("profileImg2").setAttribute('src', url);
+                        document.getElementById("profileImg3").setAttribute('src', url);
+                    }).catch((error) => {
+                        alert(error);
+                    });
+                });
+            };
+            function updateActivity(details) {
+                var recentActivityCntr = document.getElementById("recentActivityCntr");
+                db.collection("users").doc(sessionStorage.getItem("uid")).update({
+                    activity: firebase.firestore.FieldValue.arrayUnion({
+                        time: String(new Date().toLocaleString()),
+                        data: String(details)
+                    })
+                });
+                db.collection("users").doc(sessionStorage.getItem("uid")).get().then(function(doc) {
+                    if(doc.exists) {
+                        doc = doc.data();
+                        var activity = doc.activity;
+                        if(activity.length != 0) {
+                            refreshActivity(doc.activity);
+                        } else {
+                            noNotes(recentActivityCntr, "No Recent Activity");
+                        }
+                    }
+                }).catch(function(error) {
+                    alert(error);
+                });
+                
+            }
+            function refreshActivity(activities) {
+                var recentActivityCntr = document.getElementById("recentActivityCntr");
+                activities.reverse();
+                
+                if(recentActivityCntr.hasChildNodes()) {
+                    while (recentActivityCntr.hasChildNodes()) {
+                        recentActivityCntr.removeChild(recentActivityCntr.lastChild);
+                    }
+                }
+                recentActivityCntr.scrollHeight = "50px";
+                var counter = 0;
+                for(const elem in activities) {
+                    var cntrDiv = document.createElement("div");
+                    cntrDiv.style.position = "absolute";
+                    cntrDiv.style.top = String(((counter * 13) / 100.0) * recentActivityCntr.getBoundingClientRect().height) + "px";
+                    cntrDiv.style.height = String(0.1 * recentActivityCntr.getBoundingClientRect().height) + "px";
+                    cntrDiv.style.left = "0px";
+                    cntrDiv.style.width = String(0.99* recentActivityCntr.getBoundingClientRect().width) + "px";
+                    cntrDiv.style.border = "solid 1px #f5f5f5";
+                    cntrDiv.style.borderRadius = "10px";
+
+                    var dateDiv = document.createElement("div");
+                    dateDiv.style.position = "absolute";
+                    dateDiv.style.top = "0%";
+                    dateDiv.style.height = "100%";
+                    dateDiv.style.left = "2%";
+                    dateDiv.style.width = "34%";
+                    dateDiv.style.lineHeight = String(0.1 * recentActivityCntr.getBoundingClientRect().height) + "px";
+                    dateDiv.style.color = "#00c483";
+                    dateDiv.style.fontFamily = "Helvetica Neue";
+                    dateDiv.style.fontSize = "15px";
+                    dateDiv.style.whiteSpace = "nowrap";
+                    dateDiv.style.overflow = "hidden";
+                    dateDiv.style.textOverflow = "ellipsis";
+                    dateDiv.innerHTML = "Time: " + String(activities[elem].time);
+                    cntrDiv.appendChild(dateDiv);
+
+                    var infoDiv = document.createElement("div");
+                    infoDiv.style.position = "absolute";
+                    infoDiv.style.top = "0%";
+                    infoDiv.style.height = "100%";
+                    infoDiv.style.left = "40%";
+                    infoDiv.style.width = "60%";
+                    infoDiv.style.lineHeight = String(0.1 * recentActivityCntr.getBoundingClientRect().height) + "px";
+                    infoDiv.style.color = "black";
+                    infoDiv.style.fontFamily = "Helvetica Neue";
+                    infoDiv.style.fontSize = "12px";
+                    infoDiv.style.whiteSpace = "nowrap";
+                    infoDiv.style.overflow = "hidden";
+                    infoDiv.style.textOverflow = "ellipsis";
+                    infoDiv.innerHTML = String(activities[elem].data);
+                    cntrDiv.appendChild(infoDiv);
+
+                    recentActivityCntr.appendChild(cntrDiv);
+                    counter++;
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://css.gg/css' rel='stylesheet'>
+    </head>
+    <body>
+        <div id="wrapper" style="margin-left:auto; margin-right:auto;  width:960px;">
+            <div id="navBar" style="position:absolute; top:0px; width: 100%; height: 10%; left: 0%; background-color: white;">
+                <h1 style="position: absolute; height: 100%; width: 15%; text-align: center; font-family: Helvetica Neue; background: -webkit-linear-gradient(#0BAB64, #00c483); 
+                    -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer;" onclick="window.location.href='login.html'">Hobinrood</h1>
+            </div>
+            <div id="main" style="position:absolute; top: 10%; left: 0%; height: 90%; width: 100%; background-color: #3BB78F; overflow-y: scroll;">
+                <div id="loginCngtr" style="position: absolute; top: 10%; left: 35%; width: 30%; height: 60%; background-color: white; 
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);">
+                    <div style="position: absolute; top: 5%; left: 20%; width: 60%; height: 10%; font-size: 25px; font-family: Helvetica Neue Bold; color:#00c483;
+                        text-align:center;">Login</div>
+                    <input type="text" id="emailAddress" style="position: absolute; top: 23%; height: 10%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Email"/>
+                    <input type="password" id="password" style="position: absolute; top: 40%; height: 10%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Password"/>
+                    <div id="submitLogin" style="position: absolute; top: 57%; height: 50px; left: 10%; width: 80%; font-family: Helvetica Neue; font-size: 20px; 
+                        outline: none; line-height: 50px; border-radius: 10px; text-align: center; background-color:#00c483; color:white; cursor: pointer;"
+                        onclick="loginClicked();">Login</div>
+                    <div style="position: absolute; top: 73%; left: 5%; width: 90%; height: 2%; text-align: center;">____________________________________________</div>
+                    <div id="registerButton" style="position: absolute; top: 83%; left: 5%; width: 90%; text-align: center; height: 10%; font-family: Helvetica Neue;
+                        font-size: 15px; color: #00c483; cursor: pointer;" onclick="openOtherCntr();">Sign Up</div>
+                </div>
+                <div id="signupCngtr" style="position: absolute; top: 10%; left: 35%; width: 30%; height: 180%; background-color: white; 
+                    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); display: none;">
+                    <div style="position: absolute; top: 100%; height: 10%; left: 5%; width: 90%; color: transparent;"></div>
+                    <div style="position: absolute; top: 2.5%; left: 20%; width: 60%; height: 5%; font-size: 25px; font-family: Helvetica Neue Bold; color:#00c483;
+                        text-align:center;">Sign Up</div>
+                    <div style="position: absolute; top: 3%; left: 4%; color: #00c483; cursor: pointer;" class="gg-arrow-left"
+                        onclick="openOtherCntr();"></div>
+                    <input type="text" id="emailAddressSignUp" style="position: absolute; top: 10%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Email"/>
+                    <input type="text" id="nameSignUp" style="position: absolute; top: 17%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Full Name"/>
+                    <input type="text" id="positionSignUp" style="position: absolute; top: 24%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Position"/>
+                    <input type="text" id="locationSignUp" style="position: absolute; top: 31%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="City"/>
+                    <input type="tel" id="phoneSignUp" style="position: absolute; top: 38%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Work Phone"/>
+                    <input type="text" id="websiteSignUp" style="position: absolute; top: 45%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Website"/>
+                    <textarea id="summarySignUp" style="position: absolute; top: 52%; left: 10%; width: calc(80% - 10px); height: calc(15% - 10px); font-family: Helvetica Neue; font-size: 20px; outline: none; border-radius: 10px; 
+                        border: solid 1px lightgray; resize: none; padding-top: 10px; padding-left: 10px;" placeholder="Personal Summary"></textarea>
+                    <input type="password" id="passwordSignUp" style="position: absolute; top: 69%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Password"/>
+                    <input type="password" id="reenterPasswordSignUp" style="position: absolute; top: 76%; height: 5%; left: 10%; width: calc(80% - 10px); font-family: Helvetica Neue; 
+                        font-size: 20px; outline: none; border-radius: 10px; border: solid 1px lightgray; padding-left: 10px;" placeholder="Reenter Password"/>
+                    <div id="submitLogin" style="position: absolute; top: 83%; height: 50px; left: 10%; width: 80%; font-family: Helvetica Neue; font-size: 20px; 
+                        outline: none; line-height: 50px; border-radius: 10px; text-align: center; background-color:#00c483; color:white; cursor: pointer;"
+                        onclick="signUpClicked();">Sign Up</div>
+                    <div style="position: absolute; top: 89%; left: 5%; width: 90%; height: 2%; text-align: center;">____________________________________________</div>
+                    <div id="registerButton" style="position: absolute; top: 93%; left: 5%; width: 90%; text-align: center; height: 10%; font-family: Helvetica Neue;
+                        font-size: 15px; color: #00c483; cursor: pointer;" onclick="openOtherCntr();">Login</div>
+                </div>
+            </div>
+        </div>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-firestore.js"></script>
+
+        <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyD0ATCsI4RFlciDMA62liZbOVkzygq6OzY",
+            authDomain: "hobinrood-d5692.firebaseapp.com",
+            projectId: "hobinrood-d5692",
+            storageBucket: "hobinrood-d5692.appspot.com",
+            messagingSenderId: "327067621669",
+            appId: "1:327067621669:web:55ec862bbe384d7d5262cc",
+            measurementId: "G-0VZDE15WNY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+        <script>
+            var db = firebase.firestore();
+            function openOtherCntr() {
+                if(document.getElementById("loginCngtr").style.display == "none") {
+                    document.getElementById("loginCngtr").style.display = "block";
+                    document.getElementById("signupCngtr").style.display = "none";
+                    removeCurrText(["emailAddress", "password"]);
+                } else {
+                    document.getElementById("signupCngtr").style.display = "block";
+                    document.getElementById("loginCngtr").style.display = "none";
+                    removeCurrText(["emailAddressSignUp", "nameSignUp", "positionSignUp", "locationSignUp", "phoneSignUp", "websiteSignUp", 
+                        "summarySignUp", "passwordSignUp", "reenterPasswordSignUp"]);
+                }
+            }
+            function checkFilled(inputs) {
+                for(const val in inputs) {
+                    if(document.getElementById(inputs[val]).value == "" ||
+                    document.getElementById(inputs[val]).value == null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            function removeCurrText(inputs) {
+                for(const val in inputs) {
+                    document.getElementById(inputs[val]).value = "";
+                }
+            }
+            function loginClicked() {
+                if(checkFilled(["emailAddress", "password"])) {
+                    firebase.auth().signInWithEmailAndPassword(document.getElementById("emailAddress").value, document.getElementById("password").value)
+                    .then((userCredential) => {
+                        var user = userCredential.user;
+                        var uid  = user.uid;
+                        db.collection("users").doc(String(uid)).get().then(function(doc) {
+                            if(doc.exists) {
+                                doc = doc.data();
+                                sessionStorage.setItem("uid", String(uid));
+                                sessionStorage.setItem("email", String(doc.email));
+                                sessionStorage.setItem("name", String(doc.name));
+                                sessionStorage.setItem("position", String(doc.position));
+                                sessionStorage.setItem("location", String(doc.location));
+                                sessionStorage.setItem("phone", String(doc.phone));
+                                sessionStorage.setItem("website", String(doc.website));
+                                sessionStorage.setItem("summary", String(doc.summary));
+                                sessionStorage.setItem("joined", String(doc.joined));
+                                sessionStorage.setItem("picture", String(doc.picture));
+                                window.location.href = "index.html";
+                            }
+                        }).catch(function(error) {
+                            alert(error);
+                        });
+                    })
+                    .catch((error) => {
+                        alert(error);
+                    });
+                } else {
+                    alert("Input values were invalid.");
+                }
+            }
+            function signUpClicked() {
+                if(checkFilled(["emailAddressSignUp", "nameSignUp", "positionSignUp", "locationSignUp", "phoneSignUp", "websiteSignUp", 
+                    "summarySignUp", "passwordSignUp", "reenterPasswordSignUp"]) && 
+                    document.getElementById("passwordSignUp").value == document.getElementById("reenterPasswordSignUp").value) {
+                    firebase.auth().createUserWithEmailAndPassword(document.getElementById("emailAddressSignUp").value, 
+                        document.getElementById("passwordSignUp").value).then((userCredential) => {
+                            var user = userCredential.user;
+                            var uid  = user.uid;
+                            var today = new Date();
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var mm = String(today.getMonth() + 1).padStart(2, '0');
+                            var yyyy = today.getFullYear();
+
+                            today = String(mm + '/' + dd + '/' + yyyy);
+
+                            db.collection("users").doc(String(uid)).set({
+                                email: String(document.getElementById("emailAddressSignUp").value),
+                                name: String(document.getElementById("nameSignUp").value),
+                                position: String(document.getElementById("positionSignUp").value),
+                                location: String(document.getElementById("locationSignUp").value),
+                                phone: String(document.getElementById("phoneSignUp").value),
+                                website: String(document.getElementById("websiteSignUp").value),
+                                summary: String(document.getElementById("summarySignUp").value),
+                                joined: today,
+                                picture: "",
+                                portfolio: [],
+                                notes: [],
+                                activity: [],
+                            }).then(function() {
+                                sessionStorage.setItem("uid", String(uid));
+                                sessionStorage.setItem("email", String(document.getElementById("emailAddressSignUp").value));
+                                sessionStorage.setItem("name", String(document.getElementById("nameSignUp").value));
+                                sessionStorage.setItem("position", String(document.getElementById("positionSignUp").value));
+                                sessionStorage.setItem("location", String(document.getElementById("locationSignUp").value));
+                                sessionStorage.setItem("phone", String(document.getElementById("phoneSignUp").value));
+                                sessionStorage.setItem("website", String(document.getElementById("websiteSignUp").value));
+                                sessionStorage.setItem("summary", String(document.getElementById("summarySignUp").value));
+                                sessionStorage.setItem("joined", today);
+                                sessionStorage.setItem("picture", "");
+                                window.location.href = "index.html";
+                            }).catch(function(error) {
+                                alert(error);
+                            })
+                        }).catch((error) => {
+                            alert(error);
+                        });
+                } else {
+                    alert("Input values were invalid.");
+                }
+            }
+        </script>
+    </body>
+</html>
